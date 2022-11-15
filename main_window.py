@@ -22,7 +22,7 @@ class Example(QWidget):
         folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
 
         path_T = folder_path + '/tiger'
-        path_L = folder_path + 'leopard'
+        path_L = folder_path + '/leopard'
 
         self.iter1 = lab2.iterator_2(path_T)
         pic_path1 = next(self.iter1)

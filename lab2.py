@@ -54,7 +54,7 @@ class iterator_2:
 
 
 
-def write_iteration_1(iter1: iterator1, annotation_name: str):
+def write_iteration_1(iter1: iterator_1, annotation_name: str):
     """записьь первой аннотации"""
     while(True):
         try:
@@ -71,7 +71,7 @@ def write_iteration_1(iter1: iterator1, annotation_name: str):
             break
     
 
-def copy_dataset(iiter: iterator1, annotation_name: str, new_path: str):
+def copy_dataset(iiter: iterator_1, annotation_name: str, new_path: str):
     """копирование фото в новую директорию и запись 2 аннотации"""
     while(True):
         try:
@@ -90,7 +90,7 @@ def copy_dataset(iiter: iterator1, annotation_name: str, new_path: str):
         except:
             break
 
-def copy_dataset_2(iiter: iterator1, annotation_name: str, new_path: str, random_number: int):
+def copy_dataset_2(iiter: iterator_1, annotation_name: str, new_path: str, random_number: int):
     """копирование фото в новую директорию и запись 3 аннотации"""
     while(True):
         try:
@@ -117,10 +117,10 @@ with open(annotation_name_1, mode="w", encoding='utf-8') as write_file:
     file_writer.writerow(['Абсолютный путь', 'Относительный путь', 'Класс'])
 """создание 1 аннотации"""
 
-iter_1 = iterator1('tiger')
+iter_1 = iterator_1('tiger')
 write_iteration_1(iter_1, annotation_name_1)
 
-iter_2 = iterator1('leopard')
+iter_2 = iterator_1('leopard')
 write_iteration_1(iter_2, annotation_name_1)
 """запись 1 аннотации"""
 
@@ -139,10 +139,10 @@ with open(annotation_name_2, mode="w", encoding='utf-8') as w_file:
     file_writer.writerow(['Абсолютный путь', 'Относительный путь', 'Класс'])
 """создание 2 аннотации"""
 
-iiter1 = iterator1('tiger')
+iiter1 = iterator_1('tiger')
 copy_dataset(iiter1, annotation_name_2, full_path_new)
 
-iiter2 = iterator1('leopard')
+iiter2 = iterator_1('leopard')
 copy_dataset(iiter2, annotation_name_2, full_path_new)
 """копирование фото в новую директорию и запись 2 аннотации"""
 
@@ -165,10 +165,10 @@ with open(annotation_name3, mode="w", encoding='utf-8') as w_file:
     file_writer.writerow(['Абсолютный путь', 'Относительный путь', 'Класс'])
 """создании 3 аннотации"""
 
-i2ter1 = iterator1('tiger')
+i2ter1 = iterator_1('tiger')
 copy_dataset_2(i2ter1, annotation_name3, full_path_new_2, random_number)
 
 
-i2ter2 = iterator1('leopard')
+i2ter2 = iterator_1('leopard')
 copy_dataset_2(i2ter2, annotation_name3, full_path_new_2, random_number)
 """копирование фото в новую директорию и запись 3 аннотации"""
