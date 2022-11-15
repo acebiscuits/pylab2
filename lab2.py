@@ -12,7 +12,7 @@ def create_folder(path: str):
         os.mkdir(path)
 """создание папок"""
 
-class iterator1:
+class iterator_1:
     """итератор: перебирает фото"""
     def __init__(self, c_name: str):
         self.c_name = c_name
@@ -27,6 +27,31 @@ class iterator1:
             return self_path
         else:
             raise StopIteration
+
+class iterator_2:
+    """итератор: перебирает фото"""
+    def __init__(self, c_name: str):
+        self.c_name = c_name
+        self.counter = 0
+        print(c_name)
+
+    def __next__(self):
+        self_path = 'C:\\Users\\TUFman\\Desktop\\python\\python\\dataset\\' + self.c_name + '\\' + str(self.counter).zfill(4) + '.jpg'
+        if(os.path.exists(self_path)):
+            #print(self_path)
+            self.counter += 1
+            return self_path
+        else:
+            raise StopIteration
+    
+    def __prev__(self):
+        self_path = 'C:\\Users\\TUFman\\Desktop\\python\\python\\dataset\\' + self.c_name + '\\' + str(self.counter).zfill(4) + '.jpg'
+        if(os.path.exists(self_path)):
+            self.counter -= 1
+            return self_path
+        else:
+            raise StopIteration
+
 
 
 def write_iteration_1(iter1: iterator1, annotation_name: str):
