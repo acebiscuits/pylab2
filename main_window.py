@@ -20,9 +20,11 @@ class Example(QWidget):
     def initUI(self):
 
         folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        '''запрашивает путь до исходного датасета'''
 
         path_T = folder_path + '/tiger'
         path_L = folder_path + '/leopard'
+        '''создание путей'''
 
         self.iter1 = lab2.iterator_2(path_T)
         pic_path1 = next(self.iter1)
@@ -31,48 +33,54 @@ class Example(QWidget):
         self.lbl1 = QLabel(self)
         self.lbl1.setPixmap(pic1)
         self.lbl1.move(150, 150)
-        self.btn_next_B = QPushButton('next tiger', self)
-        self.btn_next_B.move(550, 600)
-        self.btn_next_B.clicked.connect(self.next_T)
-        self.btn_prev_B = QPushButton('previous tiger', self)
-        self.btn_prev_B.move(150, 600)
-        self.btn_prev_B.hide()
-        self.btn_prev_B.clicked.connect(self.prev_T)
+        self.btn_next_T = QPushButton('next tiger', self)
+        self.btn_next_T.move(550, 600)
+        self.btn_next_T.clicked.connect(self.next_T)
+        self.btn_prev_T = QPushButton('previous tiger', self)
+        self.btn_prev_T.move(150, 600)
+        self.btn_prev_T.hide()
+        self.btn_prev_T.clicked.connect(self.prev_T)
+        '''выводит и переключает картинки'''
 
-        self.iter2 = lab2.iterator_2(path_P)
+        self.iter2 = lab2.iterator_2(path_L)
         pic_path2 = next(self.iter2)
         pic2 = QPixmap(pic_path2)
         pic2 = pic2.scaled(500, 400)
         self.lbl2 = QLabel(self)
         self.lbl2.setPixmap(pic2)
         self.lbl2.move(800, 150)
-        self.btn_next_P = QPushButton('next leopard', self)
-        self.btn_next_P.move(1200, 600)
-        self.btn_next_P.clicked.connect(self.next_L)
-        self.btn_prev_P = QPushButton('previous leopard', self)
-        self.btn_prev_P.move(800, 600)
-        self.btn_prev_P.hide()
-        self.btn_prev_P.clicked.connect(self.prev_L)
-        
+        self.btn_next_L = QPushButton('next leopard', self)
+        self.btn_next_L.move(1200, 600)
+        self.btn_next_L.clicked.connect(self.next_L)
+        self.btn_prev_L = QPushButton('previous leopard', self)
+        self.btn_prev_L.move(800, 600)
+        self.btn_prev_L.hide()
+        self.btn_prev_L.clicked.connect(self.prev_L)
+        '''выводит и переключает картинки'''
 
 
         self.btn_create_annotation = QPushButton('create annotation', self)
         self.btn_create_annotation.move(200, 680)
         self.btn_create_annotation.clicked.connect(self.write_annotation)
+        '''запись первой аннотации'''
 
         self.btn_copy_dataset = QPushButton('copy dataset and write annotation', self)
         self.btn_copy_dataset.move(400, 680)
         self.btn_copy_dataset.clicked.connect(self.copy_dataset_1)
+        '''копирование датасета и запись второй аннотации'''
 
         self.btn_copy_dataset_R = QPushButton('copy dataset and write annotation with random numbers', self)
         self.btn_copy_dataset_R.move(800, 680)
         self.btn_copy_dataset_R.clicked.connect(self.copy_dataset_random)
+        '''копирование датасета со случайными номерами и запись третьей аннотации'''
 
         self.setGeometry(0, 0, 1600, 900)
         self.setWindowTitle('Application')
         self.show()
+        '''задает параметры окна приложения'''
 
     def write_annotation(self):
+        '''запись первой аннотации'''
         annotation_name = 'annotation_1_test.csv'
         print(annotation_name)
         with open(annotation_name, mode="w", encoding='utf-8') as write_file:
@@ -84,6 +92,7 @@ class Example(QWidget):
         lab2.write_iteration_1(self.copy_iter_2, annotation_name)
     
     def copy_dataset_1(self):
+        '''копирование датасета и запись второй аннотации'''
         path = 'C:\\Users\\TUFman\\Desktop\\py lab 2\\'
         project_name = 'new_data_1'
         folder = 'dataset'
@@ -101,6 +110,7 @@ class Example(QWidget):
         lab2.copy_dataset(icopy_ter1_2, annotation_name2, new_path)
 
     def copy_dataset_random(self):
+        '''копирование датасета со случайными номерами и запись третьей аннотации'''
         path = 'C:\\Users\\TUFman\\Desktop\\py lab 2\\'
         project_name = 'new_data_2'
         folder = 'dataset'
@@ -125,37 +135,36 @@ class Example(QWidget):
         pic1 = QPixmap(pic_path1).scaled(500, 400)
         self.lbl1.setPixmap(pic1)
         if not (next(self.iter1)):
-            self.btn_next_B.hide()
+            self.btn_next_T.hide()
         if (self.iter1.__prev__()):
-            self.btn_prev_B.show()
+            self.btn_prev_T.show()
 
     def prev_T(self):
         pic_path1 = self.iter1.__prev__()
         pic1 = QPixmap(pic_path1).scaled(500, 400)
         self.lbl1.setPixmap(pic1)
         if not (self.iter1.__prev__()):
-            self.btn_prev_B.hide()
+            self.btn_prev_T.hide()
         if (next(self.iter1)):
-            self.btn_next_B.show()
+            self.btn_next_T.show()
 
     def next_L(self):
         pic_path2 = next(self.iter2)
         pic2 = QPixmap(pic_path2).scaled(500, 400)
         self.lbl2.setPixmap(pic2)
         if not (next(self.iter2)):
-            self.btn_next_P.hide()
+            self.btn_next_L.hide()
         if (self.iter2.__prev__()):
-            self.btn_prev_P.show()
+            self.btn_prev_L.show()
 
     def prev_L(self):
         pic_path2 = self.iter2.__prev__()
         pic2 = QPixmap(pic_path2).scaled(500, 400)
         self.lbl2.setPixmap(pic2)
         if not (self.iter2.__prev__()):
-            self.btn_prev_P.hide()
+            self.btn_prev_L.hide()
         if (next(self.iter2)):
-            self.btn_next_P.show()
-
+            self.btn_next_L.show()
 
 
 if __name__ == '__main__':
