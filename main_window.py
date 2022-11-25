@@ -19,14 +19,10 @@ class Example(QWidget):
 
     def initUI(self):
 
-        folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        self.folder_path = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
         '''запрашивает путь до исходного датасета'''
 
-        path_T = folder_path + '/tiger'
-        path_L = folder_path + '/leopard'
-        '''создание путей'''
-
-        self.iter1 = lab2.iterator_2(path_T)
+        self.iter1 = lab2.iterator_2('tiger', self.folder_path)
         pic_path1 = next(self.iter1)
         pic1 = QPixmap(pic_path1)
         pic1 = pic1.scaled(500, 400)
@@ -42,7 +38,7 @@ class Example(QWidget):
         self.btn_prev_T.clicked.connect(self.prev_T)
         '''выводит и переключает картинки'''
 
-        self.iter2 = lab2.iterator_2(path_L)
+        self.iter2 = lab2.iterator_2('leopard', self.folder_path)
         pic_path2 = next(self.iter2)
         pic2 = QPixmap(pic_path2)
         pic2 = pic2.scaled(500, 400)
@@ -86,37 +82,34 @@ class Example(QWidget):
         with open(annotation_name, mode="w", encoding='utf-8') as write_file:
             file_writer = csv.writer(write_file, delimiter = ",", lineterminator="\r")
             file_writer.writerow(('Абсолютный путь', 'Относительный путь', 'Имя классa'))
-        self.copy_iter_1 = lab2.iterator_1('tiger')
-        self.copy_iter_2 = lab2.iterator_1('leopard')
+        self.copy_iter_1 = lab2.iterator_1('tiger', self.folder_path)
+        self.copy_iter_2 = lab2.iterator_1('leopard', self.folder_path)
         lab2.write_iteration_1(self.copy_iter_1, annotation_name)
         lab2.write_iteration_1(self.copy_iter_2, annotation_name)
     
     def copy_dataset_1(self):
         '''копирование датасета и запись второй аннотации'''
-        path = 'C:\\Users\\TUFman\\Desktop\\py lab 2\\'
+        
         project_name = 'new_data_1'
         folder = 'dataset'
-        fullpath = os.path.join(path, project_name)
-        lab2.create_folder(fullpath)
-        new_path = os.path.join(fullpath, folder)
+        lab2.create_folder(project_name)
+        new_path = os.path.join(project_name, folder)
         lab2.create_folder(new_path)
         annotation_name2 = 'annotation_2_test.csv'
         with open(annotation_name2, mode="w", encoding='utf-8') as write_file:
             file_writer = csv.writer(write_file, delimiter = ",", lineterminator="\r")
             file_writer.writerow(('Абсолютный путь', 'Относительный путь', 'Имя классa'))
-        icopy_ter1_1 = lab2.iterator_1('tiger')
+        icopy_ter1_1 = lab2.iterator_1('tiger', self.folder_path)
         lab2.copy_dataset(icopy_ter1_1, annotation_name2, new_path)
-        icopy_ter1_2 = lab2.iterator_1('leopard')
+        icopy_ter1_2 = lab2.iterator_1('leopard', self.folder_path)
         lab2.copy_dataset(icopy_ter1_2, annotation_name2, new_path)
 
     def copy_dataset_random(self):
         '''копирование датасета со случайными номерами и запись третьей аннотации'''
-        path = 'C:\\Users\\TUFman\\Desktop\\py lab 2\\'
         project_name = 'new_data_2'
         folder = 'dataset'
-        fullpath = os.path.join(path, project_name)
-        lab2.create_folder(fullpath)
-        new_path = os.path.join(fullpath, folder)
+        lab2.create_folder(project_name)
+        new_path = os.path.join(project_name, folder)
         lab2.create_folder(new_path)
         print(new_path)
         annotation_name3 = 'annotation_3_test.csv'
@@ -125,9 +118,9 @@ class Example(QWidget):
             file_writer.writerow(('Абсолютный путь', 'Относительный путь', 'Имя классa'))
         numbers = (list(range(1,10001)))
         random.shuffle(numbers)
-        i_ter_ran_1 = lab2.iterator_1('tiger')
+        i_ter_ran_1 = lab2.iterator_1('tiger', self.folder_path)
         lab2.copy_dataset_2(i_ter_ran_1, annotation_name3, new_path, numbers)
-        i_ter_ran_2 = lab2.iterator_1('leopard')
+        i_ter_ran_2 = lab2.iterator_1('leopard', self.folder_path)
         lab2.copy_dataset_2(i_ter_ran_2, annotation_name3, new_path, numbers)
             
     def next_T(self):
@@ -138,6 +131,7 @@ class Example(QWidget):
             self.btn_next_T.hide()
         if (self.iter1.__prev__()):
             self.btn_prev_T.show()
+
 
     def prev_T(self):
         pic_path1 = self.iter1.__prev__()
@@ -165,6 +159,7 @@ class Example(QWidget):
             self.btn_prev_L.hide()
         if (next(self.iter2)):
             self.btn_next_L.show()
+
 
 
 if __name__ == '__main__':
